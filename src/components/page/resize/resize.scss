@@ -1,0 +1,20 @@
+.resize{
+  grid-area: resize;
+  margin: 15px;
+  p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+  }
+  div{
+    color: white;
+    border: 1px solid rgb(134,134,134);
+    background-color: rgba(134,134,134,0.75);
+    padding: 6px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    margin: 5px;
+  }
+}

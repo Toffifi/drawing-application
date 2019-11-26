@@ -1,0 +1,61 @@
+.landing{
+  height: 83vh;
+  display: grid;
+  grid-template-areas: "b s"
+                       "e e"
+                       "l l";
+  grid-template-columns: 47% 50%;
+  margin: 20px 50px;
+  background-color: rgba(134,134,134,0.5);
+
+
+  &__button{
+    grid-area: b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a{
+      font-size: 2rem;
+      font-weight: bold;
+      color: rgba(134,134,134,1);
+      padding: 6px;
+      background-color: white;
+      border: 1px solid rgb(134,134,134);
+      box-shadow: 0px 5px 10px 0px rgba(134,134,134,1);
+    }
+  }
+
+  &__screenshot{
+    grid-area: s;
+    height: 100%;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  &__example{
+    grid-area: e;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    p{
+      font-size: 1.3rem;
+    }
+  }
+
+  &__link{
+    grid-area: l;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p{
+      font-size: 1.3rem;
+    }
+
+    a{
+      margin-left: 10px;
+    }
+  }
+}

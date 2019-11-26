@@ -1,0 +1,77 @@
+.left{
+  border: 1px solid rgba(134,134,134,0.75);
+  box-shadow: 0px 5px 10px 0px rgba(134,134,134,1);
+  display: grid;
+  grid-area: l;
+  grid-template-areas: "size"
+                       "tools"
+                       "color";
+  grid-template-rows: 6% 75% 18%;
+  color: white;
+  grid-gap: 1px;
+
+  &__penSize{
+    display: flex;
+    grid-area: size;
+    justify-content: center;
+
+    div{
+      border: 1px solid rgb(134,134,134);
+      background-color: rgba(134,134,134,0.75);
+      padding: 6px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 1px;
+      flex-grow: 1;
+      cursor: pointer;
+    }
+  }
+  &__penSize-2px{
+    font-size: 1.1rem;
+  }
+  &__penSize-3px{
+    font-size: 1.3rem;
+  }
+  &__penSize-4px{
+    font-size: 1.4rem;
+  }
+
+  &__tools{
+    grid-area: tools;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    div{
+      border: 1px solid rgb(134,134,134);
+      background-color: rgba(134,134,134,0.75);
+      display: grid;
+      justify-content: center;
+      align-items: center;
+      margin: 1.5px;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+  }
+
+  &__color{
+    grid-area: color;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &-primary{
+      border: 2px solid rgba(134,134,134,0.75);
+      height: 50px;
+      width: 50px;
+      cursor: pointer;
+    }
+  }
+}
+.sketch-picker{
+  position: relative;
+  left: 53px;
+  top: -310px;
+}

@@ -1,0 +1,23 @@
+.canvas{
+  border: 1px solid rgba(134,134,134,0.75);
+  box-shadow: 0px 5px 10px 0px rgba(134,134,134,1);
+  grid-area: p;
+  position: relative;
+  cursor: crosshair;
+  &__main{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  vertical-align: bottom;
+  image-rendering: pixelated;
+  }
+  &__background{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  vertical-align: bottom;
+  image-rendering: pixelated;
+  z-index: -1;
+  }
+
+}
