@@ -1,14 +1,15 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import './preview.scss';
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class Preview extends React.PureComponent {
   static propTypes = {
     frameImage: PropTypes.instanceOf(Object).isRequired,
     frameNum: PropTypes.number.isRequired,
-    canvasSize: PropTypes.string.isRequired,
   }
 
   constructor(props) {
@@ -86,4 +87,11 @@ class Preview extends React.PureComponent {
     );
   }
 }
-export default Preview;
+
+const mapStateToProps = state => ({
+  canvasSize: state.size.selectedCanvasSize,
+});
+
+export default connect(
+  mapStateToProps,
+)(Preview);

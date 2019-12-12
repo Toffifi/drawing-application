@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable import/extensions */
@@ -5,6 +6,7 @@
 import './frames-list.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import Parent from './frames.jsx';
 import Child from './frame.jsx';
@@ -13,7 +15,6 @@ import Child from './frame.jsx';
 class Frames extends React.PureComponent {
   static propTypes = {
     image: PropTypes.instanceOf(Object).isRequired,
-    canvasSize: PropTypes.string.isRequired,
     setMainCanvas: PropTypes.func.isRequired,
     countCurFrame: PropTypes.number.isRequired,
   }
@@ -48,7 +49,6 @@ class Frames extends React.PureComponent {
   render() {
     this.children = [];
     const { image } = this.props;
-    const { canvasSize } = this.props;
     const { setMainCanvas } = this.props;
     const { count } = this.state;
     const { countCurFrame } = this.props;
@@ -59,7 +59,7 @@ class Frames extends React.PureComponent {
         count={i + 1}
         image={image}
         countCurFrame={countCurFrame}
-        canvasSize={canvasSize}
+        canvasSize={this.props.canvasSize}
         setMainCanvas={this.setMainCanvas}
       />);
       setMainCanvas(frameImg, count);
@@ -71,4 +71,10 @@ class Frames extends React.PureComponent {
     );
   }
 }
-export default Frames;
+const mapStateToProps = state => ({
+  canvasSize: state.size.selectedCanvasSize,
+});
+
+export default connect(
+  mapStateToProps,
+)(Frames);

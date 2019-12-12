@@ -13,21 +13,11 @@ import Resize from './resize/resize.jsx';
 
 class Drawing extends React.PureComponent {
   state = {
-    size: '1',
-    canvasSize: '32',
     image: 'null',
     count: 1,
     countCurFrame: 1,
     frameImage: null,
   };
-
-  changePixelSize = (value) => {
-    this.setState({ size: value });
-  }
-
-  changeCanvasSize = (value) => {
-    this.setState({ canvasSize: value });
-  }
 
   previewImageChanged = (imageData, countData) => {
     this.setState({ image: imageData });
@@ -40,34 +30,26 @@ class Drawing extends React.PureComponent {
   }
 
   render() {
-    const { size } = this.state;
-    const { canvasSize } = this.state;
     const { image } = this.state;
     const { count } = this.state;
     const { countCurFrame } = this.state;
     const { frameImage } = this.state;
     return (
       <section className="page">
-        <Tools
-          changePixelSize={this.changePixelSize}
-        />
+        <Tools />
         <Frames
           image={image}
           countCurFrame={countCurFrame}
-          canvasSize={canvasSize}
           setMainCanvas={this.setMainCanvas}
         />
         <Canvas
-          size={size}
           count={count}
           frameImage={frameImage}
-          canvasSize={canvasSize}
           previewImageChanged={this.previewImageChanged}
         />
         <Preview
           frameImage={image}
           frameNum={countCurFrame}
-          canvasSize={canvasSize}
         />
         <Resize changeCanvasSize={this.changeCanvasSize} />
       </section>

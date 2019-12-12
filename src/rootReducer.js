@@ -8,5 +8,6 @@ const reducer = combineReducers({
   size,
 });
 
+const store = createStore(reducer, composeWithDevTools());
 
-export default createStore(reducer, composeWithDevTools());
+export default store;

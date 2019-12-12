@@ -3,7 +3,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './tools.scss';
 import { actions } from './toolsActions';
@@ -13,10 +12,6 @@ import ToolsPanel from './components/toolsPanel.jsx';
 
 
 const Tools = class extends React.PureComponent {
-  static propTypes = {
-    changePixelSize: PropTypes.func.isRequired,
-  }
-
   state = {
     displayColorPicker: false,
   }
@@ -32,7 +27,7 @@ const Tools = class extends React.PureComponent {
   render() {
     return (
       <section className="left">
-        <PenSizePanel changePixelSize={this.props.changePixelSize} />
+        <PenSizePanel setSelectedPenSize={this.props.setSelectedPenSize} />
         <ToolsPanel setSelectedTool={this.props.setSelectedTool} />
         <ColorPickerPanel
           setSelectedColor={this.props.setSelectedColor}
@@ -46,11 +41,13 @@ const Tools = class extends React.PureComponent {
 const mapStateToProps = state => ({
   selectedTool: state.tools.selectedTool,
   selectedColor: state.tools.selectedColor,
+  selectedPenSize: state.tools.selectedPenSize,
 });
 
 const mapDispatchToProps = dispatch => ({
   setSelectedTool: tool => dispatch(actions.setSelectedTool(tool)),
   setSelectedColor: color => dispatch(actions.setSelectedColor(color)),
+  setSelectedPenSize: penSize => dispatch(actions.setSelectedPenSize(penSize)),
 });
 
 export default connect(

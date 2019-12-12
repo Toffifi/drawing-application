@@ -1,14 +1,14 @@
-const SET_SELECTED_SIZE = 'SET_SELECTED_SIZE';
+const SET_SELECTED_CANVAS_SIZE = 'SET_SELECTED_CANVAS_SIZE';
 
-const setSelectedSize = payload => ({
-  type: SET_SELECTED_SIZE,
+const setSelectedCanvasSize = payload => ({
+  type: SET_SELECTED_CANVAS_SIZE,
   payload,
 });
 
 export const actions = {
-  setSelectedSize,
+  setSelectedCanvasSize,
 };
 
 export const types = {
-  SET_SELECTED_SIZE,
+  SET_SELECTED_CANVAS_SIZE,
 };

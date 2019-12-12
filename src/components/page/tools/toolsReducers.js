@@ -26,7 +26,17 @@ function selectedColor(state = initialColor, action) {
   }
 }
 
+function selectedPenSize(state = '1', action) {
+  switch (action.type) {
+    case types.SET_SELECTED_PENSIZE:
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
   selectedTool,
   selectedColor,
+  selectedPenSize,
 });

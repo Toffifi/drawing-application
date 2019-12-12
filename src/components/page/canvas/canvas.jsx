@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable react/destructuring-assignment */
@@ -10,8 +11,6 @@ import { connect } from 'react-redux';
 
 class Canvas extends React.Component {
   static propTypes = {
-    size: PropTypes.string.isRequired,
-    canvasSize: PropTypes.string.isRequired,
     previewImageChanged: PropTypes.func.isRequired,
     count: PropTypes.number.isRequired,
     frameImage: PropTypes.instanceOf(Object).isRequired,
@@ -23,8 +22,6 @@ class Canvas extends React.Component {
     this.state = {
       count: this.props.count,
       frameImage: this.props.frameImage,
-      canvasSize: this.props.canvasSize,
-      size: this.props.size,
     };
     this.canvasRef = React.createRef();
     this.canvasBackRef = React.createRef();
@@ -67,9 +64,10 @@ class Canvas extends React.Component {
     this.initCanvas();
   }
 
+  // fix
   getSnapshotBeforeUpdate(prevProps, prevState) {
     const snapshot = {};
-    if (prevState.canvasSize !== this.state.canvasSize) {
+    if (prevProps.canvasSize !== this.props.canvasSize) {
       const canvas = this.canvasRef.current;
       const ctx = canvas.getContext('2d');
       snapshot.canvasBeforeResize = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -85,12 +83,6 @@ class Canvas extends React.Component {
     }
     if (props.frameImage !== state.frameImage) {
       nextState.frameImage = props.frameImage;
-    }
-    if (props.canvasSize !== state.canvasSize) {
-      nextState.canvasSize = props.canvasSize;
-    }
-    if (props.size !== state.size) {
-      nextState.size = props.size;
     }
     return Object.keys(nextState).length ? nextState : null;
   }
@@ -112,7 +104,7 @@ class Canvas extends React.Component {
   }
 
   brushTool = (ctx, x, y, loc) => {
-    const { size } = this.props;
+    const size = this.props.selectedPenSize;
     const tool = this.props.selectedTool;
     const id = ctx.createImageData(size, size);
     const d = id.data;
@@ -442,9 +434,9 @@ class Canvas extends React.Component {
 
   initCanvas = () => {
     const ctx = this.canvasBackRef.current.getContext('2d');
-    for (let i = 0; i < this.state.canvasSize; i += 1) {
-      for (let y = 0; y < this.state.canvasSize; y += 1) {
-        const id = ctx.createImageData(this.state.size, this.state.size);
+    for (let i = 0; i < this.props.canvasSize; i += 1) {
+      for (let y = 0; y < this.props.canvasSize; y += 1) {
+        const id = ctx.createImageData(this.props.selectedPenSize, this.props.selectedPenSize);
         const d = id.data;
         const col = y % 2 === i % 2 ? 100 : 75;
         d[0] = col;
@@ -460,8 +452,8 @@ class Canvas extends React.Component {
     return (
       <section className="canvas">
         <canvas
-          width={this.state.canvasSize}
-          height={this.state.canvasSize}
+          width={this.props.canvasSize}
+          height={this.props.canvasSize}
           className="canvas__main"
           ref={this.canvasRef}
           onMouseDown={this.onMouseDown}
@@ -469,8 +461,8 @@ class Canvas extends React.Component {
           onMouseUp={this.onMouseUp}
         />
         <canvas
-          width={this.state.canvasSize}
-          height={this.state.canvasSize}
+          width={this.props.canvasSize}
+          height={this.props.canvasSize}
           className="canvas__background"
           ref={this.canvasBackRef}
         />
@@ -481,6 +473,8 @@ class Canvas extends React.Component {
 const mapStateToProps = state => ({
   selectedTool: state.tools.selectedTool,
   selectedColor: state.tools.selectedColor,
+  selectedPenSize: state.tools.selectedPenSize,
+  canvasSize: state.size.selectedCanvasSize,
 });
 
 export default connect(
