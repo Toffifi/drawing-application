@@ -49,8 +49,11 @@ class Canvas extends React.Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     const canvas = this.canvasRef.current;
     const ctx = canvas.getContext('2d');
+    const { previewImageChanged } = this.props;
     if (snapshot && snapshot.canvasBeforeResize && canvas) {
       ctx.putImageData(snapshot.canvasBeforeResize, 0, 0);
+      previewImageChanged(ctx.getImageData(0, 0, this.canvasRef.current.width,
+        this.canvasRef.current.height), this.lastFrame);
     }
     if (this.lastFrame !== this.state.count) {
       this.lastFrame = this.state.count;
@@ -60,11 +63,12 @@ class Canvas extends React.Component {
       } else {
         this.paintAllCanvas(true);
       }
+      previewImageChanged(ctx.getImageData(0, 0, this.canvasRef.current.width,
+        this.canvasRef.current.height), this.lastFrame);
     }
     this.initCanvas();
   }
 
-  // fix
   getSnapshotBeforeUpdate(prevProps, prevState) {
     const snapshot = {};
     if (prevProps.canvasSize !== this.props.canvasSize) {

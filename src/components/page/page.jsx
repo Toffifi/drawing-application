@@ -1,8 +1,11 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable import/extensions */
 
 import './page.scss';
 
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Tools from './tools/tools.jsx';
 import Frames from './frames-list/frames-list.jsx';
@@ -10,8 +13,10 @@ import Canvas from './canvas/canvas.jsx';
 import Preview from './preview/preview.jsx';
 import Resize from './resize/resize.jsx';
 
+import { actions } from './canvas/canvasActions';
 
-class Drawing extends React.PureComponent {
+
+class Page extends React.PureComponent {
   state = {
     image: 'null',
     count: 1,
@@ -22,6 +27,7 @@ class Drawing extends React.PureComponent {
   previewImageChanged = (imageData, countData) => {
     this.setState({ image: imageData });
     this.setState({ countCurFrame: countData });
+    this.props.setCanvas({ image: imageData, frame: countData });
   }
 
   setMainCanvas = (fImage, fCount) => {
@@ -47,14 +53,18 @@ class Drawing extends React.PureComponent {
           frameImage={frameImage}
           previewImageChanged={this.previewImageChanged}
         />
-        <Preview
-          frameImage={image}
-          frameNum={countCurFrame}
-        />
+        <Preview />
         <Resize changeCanvasSize={this.changeCanvasSize} />
       </section>
     );
   }
 }
 
-export default Drawing;
+const mapDispatchToProps = dispatch => ({
+  setCanvas: payload => dispatch(actions.setCanvas(payload)),
+});
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(Page);

@@ -12,9 +12,9 @@ class Resize extends React.PureComponent {
     return (
       <section className="resize">
         <p>Resize</p>
-        <div role="button" tabIndex="0" onClick={() => { this.props.setSelectedCanvasSize('32'); }}>32x32</div>
-        <div role="button" tabIndex="0" onClick={() => { this.props.setSelectedCanvasSize('64'); }}>64x64</div>
-        <div role="button" tabIndex="0" onClick={() => { this.props.setSelectedCanvasSize('128'); }}>128x128</div>
+        <div role="button" tabIndex="0" onClick={() => { this.setSelectedCanvasSize('32'); }}>32x32</div>
+        <div role="button" tabIndex="0" onClick={() => { this.setSelectedCanvasSize('64'); }}>64x64</div>
+        <div role="button" tabIndex="0" onClick={() => { this.setSelectedCanvasSize('128'); }}>128x128</div>
       </section>
     );
   }

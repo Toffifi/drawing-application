@@ -1,48 +1,23 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import './preview.scss';
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class Preview extends React.PureComponent {
-  static propTypes = {
-    frameImage: PropTypes.instanceOf(Object).isRequired,
-    frameNum: PropTypes.number.isRequired,
-  }
-
   constructor(props) {
     super(props);
     this.canvasRef = React.createRef();
     this.framesArr = [];
     this.curframe = 1;
     this.intervalID = -1;
+    this.paintAllCanvas = this.paintAllCanvas.bind(this);
   }
 
   componentWillMount() {
     this.startTimer(1000);
-  }
-
-  componentDidUpdate() {
-    const { frameImage } = this.props;
-    const { frameNum } = this.props;
-    if (frameImage !== null && typeof (frameImage) !== 'undefined') {
-      let contains = false;
-      const frameObj = {
-        num: frameNum,
-        img: frameImage,
-      };
-      for (let i = 0; i < this.framesArr.length; i += 1) {
-        if (this.framesArr[i].num === frameNum) {
-          contains = true;
-          this.framesArr[i] = frameObj;
-        }
-      }
-      if (contains === false) {
-        this.framesArr.push(frameObj);
-      }
-    }
   }
 
   startTimer = (fps) => {
@@ -50,24 +25,31 @@ class Preview extends React.PureComponent {
       clearInterval(this.intervalID);
     }
     this.intervalID = setInterval(() => {
-      if (this.curframe > this.framesArr.length) {
+      if (this.curframe > this.props.canvas.length) {
         this.curframe = 1;
       }
-      let contains = false;
-      let frame = null;
-      for (let i = 0; i < this.framesArr.length; i += 1) {
-        if (this.framesArr[i].num === this.curframe) {
-          contains = true;
-          frame = this.framesArr[i].img;
+      const frame = this.props.canvas.find(c => c.frame === this.curframe);
+      if (frame != null) {
+        const canvas = this.canvasRef.current;
+        if (canvas != null) {
+          const ctx = canvas.getContext('2d');
+          this.paintAllCanvas();
+          ctx.putImageData(frame.image, 0, 0);
+          this.curframe += 1;
         }
       }
-      const canvas = this.canvasRef.current;
-      if (contains === true && canvas != null) {
-        const ctx = canvas.getContext('2d');
-        ctx.putImageData(frame, 0, 0);
-        this.curframe += 1;
-      }
     }, fps);
+  }
+
+  paintAllCanvas = () => {
+    const canvas = this.canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    const id = ctx.createImageData(canvas.width, canvas.height);
+    const d = id.data;
+    for (let i = 0; i < canvas.width * canvas.height * 4; i += 1) {
+      d[i] = 0;
+    }
+    ctx.putImageData(id, 0, 0);
   }
 
 
@@ -90,6 +72,7 @@ class Preview extends React.PureComponent {
 
 const mapStateToProps = state => ({
   canvasSize: state.size.selectedCanvasSize,
+  canvas: state.canvas.canvas,
 });
 
 export default connect(
