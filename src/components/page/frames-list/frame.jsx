@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 class Child extends React.PureComponent {
   static propTypes = {
     count: PropTypes.number.isRequired,
-    image: PropTypes.instanceOf(Object).isRequired,
     setMainCanvas: PropTypes.func.isRequired,
     countCurFrame: PropTypes.number.isRequired,
   }
@@ -62,7 +61,7 @@ class Child extends React.PureComponent {
           </div>
           <div className="delete"><i className="fas fa-trash" /></div>
         </div>
-        <canvas ref={this.canvasRef} width={this.props.canvasSize} height={this.props.canvasSize} role="button" tabIndex="0" onClick={() => { setMainCanvas(this.frameImage, count); }} />
+        <canvas ref={this.canvasRef} width={this.props.canvasSize} height={this.props.canvasSize} role="button" tabIndex="0" onClick={() => setMainCanvas(this.frameImage, count)} />
         <div className="frames__frame-bottom">
           <div>
             <i className="fas fa-grip-vertical" />

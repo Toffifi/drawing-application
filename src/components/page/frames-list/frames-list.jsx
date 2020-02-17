@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable react/destructuring-assignment */
@@ -14,26 +15,18 @@ import Child from './frame.jsx';
 
 class Frames extends React.PureComponent {
   static propTypes = {
-    image: PropTypes.instanceOf(Object).isRequired,
     setMainCanvas: PropTypes.func.isRequired,
     countCurFrame: PropTypes.number.isRequired,
   }
 
   state = {
     numChildren: 1,
-    count: 1,
-    frameImg: null,
   }
 
   onAddChild = () => {
     this.setState({
       numChildren: this.state.numChildren + 1,
     });
-  }
-
-  setMainCanvas = (fimage, fcount) => {
-    this.setState({ count: fcount });
-    this.setState({ frameImg: fimage });
   }
 
   getImageArray = () => {
@@ -50,9 +43,7 @@ class Frames extends React.PureComponent {
     this.children = [];
     const { image } = this.props;
     const { setMainCanvas } = this.props;
-    const { count } = this.state;
     const { countCurFrame } = this.props;
-    const { frameImg } = this.state;
     for (let i = 0; i < this.state.numChildren; i += 1) {
       this.children.push(<Child
         key={i + 1}
@@ -60,9 +51,8 @@ class Frames extends React.PureComponent {
         image={image}
         countCurFrame={countCurFrame}
         canvasSize={this.props.canvasSize}
-        setMainCanvas={this.setMainCanvas}
+        setMainCanvas={setMainCanvas}
       />);
-      setMainCanvas(frameImg, count);
     }
     return (
       <Parent addChild={this.onAddChild}>

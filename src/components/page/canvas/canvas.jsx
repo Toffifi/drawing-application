@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable class-methods-use-this */
@@ -13,7 +14,7 @@ class Canvas extends React.Component {
   static propTypes = {
     previewImageChanged: PropTypes.func.isRequired,
     count: PropTypes.number.isRequired,
-    frameImage: PropTypes.instanceOf(Object).isRequired,
+    frameImage: PropTypes.instanceOf(Object),
   }
 
 
