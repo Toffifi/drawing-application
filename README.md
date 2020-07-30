@@ -1,4 +1,4 @@
-# piskel-clone
+# drawing-application
 ### https://toffifi.github.io/
 ![Screenshot](https://i.ibb.co/nc4rwDK/screenshot.png)
 
